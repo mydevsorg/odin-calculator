@@ -3,6 +3,8 @@ const display = document.querySelector("#display");
 const clearBtn = document.querySelector(".clear");
 const operatorBtn = document.querySelectorAll(".operator");
 const equalBtn = document.querySelector(".equal");
+const decimalBtn = document.querySelector(".decimal");
+const deleteBtn = document.querySelector(".delete");
 
 function add(val1, val2) {
   return val1 + val2;
@@ -120,5 +122,59 @@ equalBtn.addEventListener("click", () => {
     resultDisplayed = true;
   } else {
     display.value = "Expression not found!";
+  }
+});
+
+decimalBtn.addEventListener("click", () => {
+  if (currentOperand === "first") {
+    if (!firstOperand.includes(".")) {
+      firstOperand += decimalBtn.textContent;
+      display.value = `${firstOperand}`;
+    }
+  } else {
+    if (!secondOperand.includes(".")) {
+      secondOperand += decimalBtn.textContent;
+      display.value = `${firstOperand} ${operator} ${secondOperand}`;
+    }
+  }
+});
+
+deleteBtn.addEventListener("click", () => {
+  if (currentOperand === "first") {
+    firstOperand = firstOperand.slice(0, -1);
+    display.value = firstOperand;
+  } else {
+    if (currentOperand === "second" && secondOperand === "") {
+      operator = operator.slice(0, -1);
+      currentOperand = "first";
+      currentOperator = "first";
+    }
+    secondOperand = secondOperand.slice(0, -1);
+    display.value = `${firstOperand} ${operator} ${secondOperand}`;
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  const operators = ["-", "+", "*", "/"];
+  const calculate = ["Enter", "="];
+  const del = "Backspace";
+  const clear = "Escape";
+  let eKey = event.key;
+
+  if (digits.includes(event.key)) {
+    let digit = [...digitBtn].find((element) => element.textContent === eKey);
+    digit.click();
+  } else if (operators.includes(event.key)) {
+    let operator = [...operatorBtn].find(
+      (element) => element.textContent === eKey,
+    );
+    operator.click();
+  } else if (calculate.includes(event.key)) {
+    equalBtn.click();
+  } else if (del === event.key) {
+    deleteBtn.click();
+  } else if (clear === event.key) {
+    clearBtn.click();
   }
 });
