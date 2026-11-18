@@ -162,19 +162,19 @@ document.addEventListener("keydown", (event) => {
   const clear = "Escape";
   let eKey = event.key;
 
-  if (digits.includes(event.key)) {
+  if (digits.includes(eKey)) {
     let digit = [...digitBtn].find((element) => element.textContent === eKey);
     digit.click();
-  } else if (operators.includes(event.key)) {
+  } else if (operators.includes(eKey)) {
     let operator = [...operatorBtn].find(
       (element) => element.textContent === eKey,
     );
     operator.click();
-  } else if (calculate.includes(event.key)) {
+  } else if (calculate.includes(eKey)) {
     equalBtn.click();
-  } else if (del === event.key) {
+  } else if (del === eKey) {
     deleteBtn.click();
-  } else if (clear === event.key) {
+  } else if (clear === eKey) {
     clearBtn.click();
   }
 });
